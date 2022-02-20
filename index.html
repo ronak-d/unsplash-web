@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+<style id="structure">
+
+</style>
+  <!-- <style>
+    /* #imgdiv{
+      border: 2px solid teal;
+    } */
+    #container{
+      display: flex;
+      height: 100%;
+      width: 100%;
+      /* border: 2px solid red; */
+      flex-flow: row wrap;
+    }
+    #sidebar{
+      flex: 1.5;
+      /* border: 2px solid black; */
+      background-color:rgb(189, 194, 194)
+    }
+    #main{
+      flex: 8.5;
+      /* border: 3px solid teal; */
+      background-color: rgb(189, 194, 194)
+    }
+    #picid{
+      width: 250px;
+
+    }
+
+    #main{
+      display:grid;
+      grid-template-columns: repeat(3, 30%);
+      grid-gap: 3%;
+    }
+
+    #sidebar *{
+      margin: 15px;
+      padding: 3px;
+    }
+
+    #searchenter{
+      padding:10px;
+      border: 10px solid black;
+    }
+  </style> -->
+
+  <body>
+    <div id="container">
+      <div id="sidebar">
+        <!--DO NOT CHANGE THIS ID's-->
+        <!--Append the horizontal navbar(sidebar) here only-->
+      </div>
+
+      <div id="main">
+        <!--DO NOT CHANGE THIS ID's-->
+        <!--Append top images here only-->
+      </div>
+    </div>
+  </body>
+</html>
+
+<script type="module">
+
+  // importing css;
+  import css from './css/maincss.js'
+  let structure = document.getElementById("structure");
+  structure.innerHTML = css();
+
+// importing sidebar-
+// make sure to make script as a module 
+// append with id
+import sidebar from "./components/sidebar.js"
+let sidebardumi = document.getElementById("sidebar");
+sidebardumi.innerHTML = sidebar();
+// console.log(sidebar);
+
+
+// importing apicall()------------
+import {apiCall,appendPictures} from "./scripts/main.js"
+
+
+let images_data =  await apiCall(`https://api.unsplash.com/search/photos?client_id=AiQlSGiTzeS99GAz-HO_tXd1IdkiCaU8WUM0u1JijGY&query=avengers`);
+// console.log(images_data);
+
+let parent = document.getElementById("main"); // main is the html div;
+appendPictures(images_data.results, parent)
+
+
+// getiing the value of search bar and giving condition for enter.---consider as-(e.key === "Enter)----------------
+// send the search input to local storage and get the value to search.html
+// localstorage.setitem("key", "value");
+
+let input = document.getElementById("searchbar");
+
+input.addEventListener("keypress", (e) => {
+
+  if(e.key == "Enter"){
+
+    let input_value = document.getElementById("searchbar").value;
+
+    localStorage.setItem("search_term", input_value);
+
+    window.location.href = "search.html";
+  }
+})
+</script>
+
+<!-- resume from 1h 14 min -->
